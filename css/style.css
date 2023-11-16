@@ -1,0 +1,22 @@
+body{
+   width: 1512px;
+   height:1177px ;
+   top: -35303px;
+   left: -35590px;
+}
+header{
+    width: Fixed (1,512px);
+    height: Hug (70px);
+    padding: 20px, 30px, 20px, 30px;
+    gap: 24px;
+    background: #0880D6;
+}
+.header__title{
+    width: 245px;
+    height: 30px;
+    font: Poppins;
+    font-weight: 700;
+    size: 20px;
+    line-height: 30px;
+    color: #FFFFFF;
+}
