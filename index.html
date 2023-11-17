@@ -6,6 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>carnet contact</title>
     <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300&family=Work+Sans:wght@400;500;800&display=swap"
+        rel="stylesheet">
 
 </head>
 
@@ -16,63 +21,75 @@
         </div>
     </header>
     <main>
+
+        <!-- PART FOR FORM TO ADD CONTACT -->
         <div class="main__form">
-            <form>
-                <div class="main__form__title">
-                    <h2>formulaire des contacts</h2>
+
+            <h2 class="main__form__title">formulaire des contacts</h2>
+
+            <form class="main__form__contain">
+
+                <div class="main__form__contain__prenom">
+                    <label class="main__form__contain__prenom__label">Prénom</label>
+                    <input class="main__form__contain__prenom__input" type="text">
+                    <span class="main__form__contain__prenom__error-message"></span>
                 </div>
-                <div class="main__form__label-prenom">
-                    <label>Prénom</label>
+
+                <div class="main__form__contain__nom">
+                    <label class="main__form__contain__nom__label">Nom</label>
+                    <input class="main__form__contain__nom__input" type="text">
+                    <span class="main__form__contain__nom__error-message"></span>
                 </div>
-                <div class="main__form__input-prenom">
-                    <input type="text">
+
+                <div class="main__form__contain__telephone">
+                    <label class="main__form__contain__telephone__label">Téléphone</label>
+                    <input class="main__form__contain__telephone__input" type="text">
+                    <span class="main__form__contain__telephone__error-message"></span>
                 </div>
-                <div class="main__form__label-nom">
-                    <label>Nom</label>
+
+                <div class="main__form__contain__groupe">
+                    <label class="main__form__contain__groupe__label">Groupe</label>
+                    <input class="main__form__contain__groupe__input" type="text">
+                    <span class="main__form__contain__groupe__error-message"></span>
                 </div>
-                <div class="main__form__input-nom">
-                    <input type="text">
+
+                <div class="main__form__contain__email">
+                    <label class="main__form__contain__email__label">Email</label>
+                    <input class="main__form__contain__email__input" type="text">
+                    <span class="main__form__contain__email__error-message"></span>
                 </div>
-                <div class="main__form__label-telephone">
-                    <label>Téléphone</label>
+
+                <div class="main__form__contain__bio">
+                    <label class="main__form__contain__bio__label">Bio</label>
+                    <input class="main__form__contain__bio__input" type="text">
+                    <span class="main__form__contain__bio__error-message"></span>
                 </div>
-                <div class="main__form__input-telephone">
-                    <input type="text">
+
+                <div class="main__form__contain__photo">
+                    <input class="main__form__contain__photo__input" type="text" placeholder="Déposer la photo ici">
+                    <span class="main__form__contain__photo__error-message"></span>
                 </div>
-                <div class="main__form__label-groupe">
-                    <label>Groupe</label>
-                </div>
-                <div class="main__form__input-groupe">
-                    <input type="text">
-                </div>
-                <div class="main__form__label-email">
-                    <label>Email</label>
-                </div>
-                <div class="main__form__input-email">
-                    <input type="text">
-                </div>
-                <div class="bio">
-                    <label>Bio</label>
-                    <input type="text">
-                </div>
-                <div class="main__form__input-bio">
-                    <input type="text" placeholder="Déposer la photo ici">
-                </div>
-                <div class="main__form__button">
-                    <button>Créer</button>
-                    <button>Renit</button>
+
+                <div class="main__form__contain__button">
+                    <button class="main__form__contain__button__create">Créer</button>
+                    <button class="main__form__contain__button__reinit">Renit</button>
                 </div>
             </form>
         </div>
-        <div class="contain-contact">
-            <div class="contain-contact__header">
-                <h2 class="contain-contact__header__title">Liste des contacts</h2>
+
+        <!-- PART OF INFO CONTACT -->
+
+        <div class="main-contact">
+
+            <div class="main-contact__header">
+                <h2 class="main-contact__header__title">Liste des contacts</h2>
             </div>
             <div class="contain-contact__infos">
                 <!-- space of infos contacts to js -->
+
             </div>
 
-        </div>
+
     </main>
 
     <!-- include javascript file -->
