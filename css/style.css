@@ -20,3 +20,13 @@ header{
     line-height: 30px;
     color: #FFFFFF;
 }
+
+.error-outline{
+    border-color: darkred;
+    border-width: 3px;
+    border-style: solid;
+}
+
+.error-message{
+    color: darkred;
+}
