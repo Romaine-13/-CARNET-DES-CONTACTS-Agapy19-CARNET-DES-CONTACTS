@@ -15,83 +15,76 @@
 </head>
 
 <body>
-    <header>
-        <div class="header__title">
-            <h2>Répertoire des contacts</h2>
-        </div>
+    <header class="bg-blue">
+        <h1 class="title-style ">Répertoire des contacts</h1>
     </header>
+
     <main>
 
-        <!-- PART FOR FORM TO ADD CONTACT -->
-        <div class="main__form">
+        <!-- left part of main contain -->
+        <section class="left-main">
+            <div class="left-main__contain-title bg-blue">
+                <h2 class="title-style">Formulaire de contact</h2>
+            </div>
+            <form class="left-main__contain-form">
 
-            <h2 class="main__form__title">formulaire des contacts</h2>
-
-            <form class="main__form__contain">
-
-                <div class="main__form__contain__prenom">
-                    <label class="main__form__contain__prenom__label">Prénom</label>
-                    <input class="main__form__contain__prenom__input" type="text">
-                    <span class="main__form__contain__prenom__error-message"></span>
+                <div class="left-main__contain-form__contain-input">
+                    <div class="conatain-input__div-prenom">
+                        <label class="div-prenom__label">Prénom</label>
+                        <input class="div-prenom__input" type="text">
+                        <span class="div-prenom__error-message style-error-message"></span>
+                    </div>
+    
+                    <div class="contain-input__div-nom">
+                        <label class="div-nom__label">Nom</label>
+                        <input class="div-nom__input" type="text">
+                        <span class="div-nom__error-message style-error-message"></span>
+                    </div>
+    
+                    <div class="contain-input__div-phone">
+                        <label class="div-phone__label">Téléphone</label>
+                        <input class="div-phone__input" type="text">
+                        <span class="div-phone__error-message style-error-message"></span>
+                    </div>
+    
+                    <div class="contain-input__div-groupe">
+                        <label class="div-groupe__label">Groupe</label>
+                        <input class="div-groupe__input" type="text">
+                        <span class="div-groupe__error-message style-error-message"></span>
+                    </div>
+    
+                    <div class="contain-input__div-email">
+                        <label class="div-email__label">Email</label>
+                        <input class="div-email__input" type="text">
+                        <span class="div-email__error-message style-error-message"></span>
+                    </div>
+    
+                    <div class="contain-input__div-bio">
+                        <label class="div-bio__label">Bio</label>
+                        <input class="div-bio__input" type="text">
+                        <span class="div-bio__error-message style-error-message"></span>
+                    </div>
+    
+                    <div class="contain-input__div-photo">
+                        <p class="div-photo__texte" >Déposer la photo ici</p>
+                        <span class="div-photo__error-message style-error-message"></span>
+                    </div>
                 </div>
 
-                <div class="main__form__contain__nom">
-                    <label class="main__form__contain__nom__label">Nom</label>
-                    <input class="main__form__contain__nom__input" type="text">
-                    <span class="main__form__contain__nom__error-message"></span>
-                </div>
-
-                <div class="main__form__contain__telephone">
-                    <label class="main__form__contain__telephone__label">Téléphone</label>
-                    <input class="main__form__contain__telephone__input" type="text">
-                    <span class="main__form__contain__telephone__error-message"></span>
-                </div>
-
-                <div class="main__form__contain__groupe">
-                    <label class="main__form__contain__groupe__label">Groupe</label>
-                    <input class="main__form__contain__groupe__input" type="text">
-                    <span class="main__form__contain__groupe__error-message"></span>
-                </div>
-
-                <div class="main__form__contain__email">
-                    <label class="main__form__contain__email__label">Email</label>
-                    <input class="main__form__contain__email__input" type="text">
-                    <span class="main__form__contain__email__error-message"></span>
-                </div>
-
-                <div class="main__form__contain__bio">
-                    <label class="main__form__contain__bio__label">Bio</label>
-                    <input class="main__form__contain__bio__input" type="text">
-                    <span class="main__form__contain__bio__error-message"></span>
-                </div>
-
-                <div class="main__form__contain__photo">
-                    <input class="main__form__contain__photo__input" type="text" placeholder="Déposer la photo ici">
-                    <span class="main__form__contain__photo__error-message"></span>
-                </div>
-
-                <div class="main__form__contain__button">
-                    <button class="main__form__contain__button__create">Créer</button>
-                    <button class="main__form__contain__button__reinit">Renit</button>
+                <div class="left-main__contain-form__contain-button">
+                    <button type="button" class="contain-button__create-btn bg-blue">Créer</button>
+                    <button type="button" class="contain-button__create-clear bg-red">Réinit</button>
                 </div>
             </form>
-        </div>
+        </section>
 
-        <!-- PART OF INFO CONTACT -->
-
-        <div class="main-contact">
-
-            <div class="main-contact__header">
-                <h2 class="main-contact__header__title">Liste des contacts</h2>
+        <!-- left part of main contain -->
+        <section class="right-main">
+            <div class="right-main__contain-title bg-blue">
+                <h2 class="title-style">Liste des contacts</h2>
             </div>
-            <div class="contain-contact__infos">
-                <!-- space of infos contacts to js -->
-
-            </div>
-
-
+        </section>
     </main>
-
     <!-- include javascript file -->
     <script src="js/index.js"></script>
 </body>
