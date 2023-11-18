@@ -34,5 +34,3 @@ let contact = {
     },
 };
 
-
-
