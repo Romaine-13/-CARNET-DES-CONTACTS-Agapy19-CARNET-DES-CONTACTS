@@ -1,29 +1,5 @@
-//Link objects HTML and Js by DOM API
-
-const input_txt_prenom = document.querySelector(".main__form__input-prenom input");
-
 //initialize array of contact persons
 let array_contacts = [];
-
-/**
- * function to validate content
- * if return is -1: length of name is < 3
- * if return is =1: length of name is between 3 and 50
- * if return is 0: length of name is valid (between 3 and 50)
- * 
- * @param {string} param_name 
- */
-function validName(param_name) {
-    if(param_name.length>=3 && param_name.length<=50){
-        return 0
-    }
-
-    else if (param_name.length<3) {
-        return -1
-    } else {
-        return 1
-    }
-}
 
 //creation and initilize contact object
 let contact = {
@@ -52,29 +28,80 @@ let contact = {
     } 
 }
 
+//Link objects HTML and Js by DOM API
 
-//Managment events input changed of input
-input_txt_prenom.addEventListener("change", ()=>{
-    const div_input_prenom = document.querySelector(".div op databprenom");
-    const element_message_error = document.querySelector(".class error input");
-    let out_state = validName(input_txt_prenom.value);
+const input_txt_prenom = document.querySelector(".div-prenom__input");
+const input_txt_nom = document.querySelector(".div-nom__input");
+
+/**
+ * function to validate content
+ * if return is -1: length of name is < 3
+ * if return is =1: length of name is between 3 and 50
+ * if return is 0: length of name is valid (between 3 and 50)
+ * 
+ * @param {string} param_name 
+ */
+function validLengthName(param_name) {
+    if(param_name.length>=3 && param_name.length<=50){
+        return 0
+    }
+
+    else if (param_name.length<3) {
+        return -1
+    } else {
+        return 1
+    }
+}
+
+/**
+ * Manage Input Name
+ * first Name
+ * last Name
+ * @param {object} input 
+ * @param {string} error_message 
+ * @param {object} error_element 
+ */
+
+function ManageInputName(error_message1, error_message2, error_element, input_element){
+    // const element_message_error = document.querySelector(".div-prenom__error-message");
+    let out_state = validLengthName(input_element.value);
 
     if (out_state == 0) {
-        element_message_error.textContent = "";
-        input_txt_prenom.classList.remove("error-outline");
+        error_element.textContent = "";
+        input_element.classList.remove("error-outline");
     }
-    else{
-        
-        input_txt_prenom.classList.add("error-outline"); 
+    else{ 
+        input_element.classList.add("error-outline"); 
 
         if(out_state == -1){
-            element_message_error.textContent = "Votre prenom est trop court, taille min: 3 caractères"
-            div_input_prenom.appendChild(element_message_error);
+            error_element.textContent = error_message1;
         }
         else{
-            element_message_error.textContent = "Votre prenom est trop long, Taille max: 100 caractères"
-            element_message_error.setAttribute("style", "display:block"); 
-            div_input_prenom.appendChild(element_message_error);
+            error_element.textContent = error_message2;
         }
     }
+}
+
+
+
+
+//Managment events input changed of input
+
+//input for first name
+input_txt_prenom.addEventListener("blur", ()=>{
+    let message1, message2, element_error;
+    message1 = "Votre prenom est trop court, Taille min acceptée: 3";
+    message2 = "Votre prenom est trop long, Taille max acceptée: 50";
+    element_error = document.querySelector(".div-prenom__error-message");
+    ManageInputName(message1, message2, element_error, input_txt_prenom);
+})
+
+
+//input for last name
+input_txt_nom.addEventListener("blur", ()=>{
+    let message1, message2, element_error;
+    message1 = "Votre nom est trop court, Taille min acceptée: 3";
+    message2 = "Votre nom est trop long, Taille max acceptée: 50";
+    element_error = document.querySelector(".div-nom__error-message");
+    ManageInputName(message1, message2, element_error, input_txt_prenom);
 })
