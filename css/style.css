@@ -203,3 +203,55 @@ section{
     align-items: flex-start;
 
 }
+/* Responsive */
+@media screen and (max-width: 480px) {
+    .div-photo__texte{
+        width: 20%;
+        font-size: 10px;
+        color: var(--gray-color);
+        font-weight: 500;
+        text-align: center;
+    }
+    main{
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+        padding-bottom: 20px;
+        flex-direction: column;
+        align-items: center;
+    }
+    .left-main{
+        width: 90%;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        gap: 1.7rem;
+        padding-bottom: 4rem;
+    }
+    .right-main{
+        width: 90%;
+        height: 41.5rem;
+    }
+    .left-main__contain-form__contain-button{
+        display: flex;
+        align-items: center;
+        gap: 2.25rem;
+        width: 80%;
+        flex-direction: column;
+        justify-content: center;
+    }
+    .left-main__contain-form__contain-button button{
+        display: flex;
+        width: 100%;
+        color: var(--white-color);
+        font-size: 1rem;
+        font-weight: bold;
+        border-style: none;
+        text-align: center;
+        align-items: center;
+        justify-content: center;
+        
+       
+    }
+    
+}
