@@ -33,7 +33,7 @@ body{
 
 .style-error-message{
     color: var(--red-color);
-    font-style: oblique;
+    align-self: flex-start;
 }
 
 /*
