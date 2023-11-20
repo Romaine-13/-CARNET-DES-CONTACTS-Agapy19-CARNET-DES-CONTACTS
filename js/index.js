@@ -105,3 +105,6 @@ input_txt_nom.addEventListener("blur", ()=>{
     element_error = document.querySelector(".div-nom__error-message");
     ManageInputName(message1, message2, element_error, input_txt_prenom);
 })
+// reset the form
+let btn_renit = document.querySelector(".contain-button__create-clear bg-red")
+console.log(btn_renit);
