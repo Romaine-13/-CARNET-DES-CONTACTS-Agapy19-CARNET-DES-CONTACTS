@@ -107,7 +107,7 @@ input_txt_nom.addEventListener("blur", () => {
 // reset form
 let btn = document.querySelector('.contain-button__create-clear')
 let inputs = document.querySelectorAll('input');
-btn.addEventListener('click' , ()=>{
+btn.addEventListener('click', () => {
     inputs.forEach(input => input.value = ' ')
 })
 // reset the form
@@ -115,18 +115,21 @@ let btn_renit = document.querySelector(".contain-button__create-clear bg-red")
 console.log(btn_renit);
 
 //  email function
-let input_email=document.querySelector("div-email__input");
-let span=document.querySelector("div-bio__error-message style-error-message");
-email.prevendDefault();
-function validateEmail(email){
+let input_email = document.querySelector(".div-email__input");
+let span_error_message=document.querySelector(".div-email__error-message");
+
+
+function validateEmail(email) {
     let emailReg = new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))/i);
-    input_email.innerText=input_email.value;
     return emailReg.test(email);
- }
-// input.addEventListener("change",()=>{
-//     if(validateEmail(input.value)){
-//         alert("Email  valide");
-//     } else {
-//         alert("Email invalide");
-//     }
-// }0fc8d71fbc8b02a56fefbc6a0503a9a4ec56612f
+}
+input_email.addEventListener("blur", () => {
+    if (validateEmail(input_email.value)) {
+        input_email.setAttribute("style", "border-color: #C4C4C4; border-width: 1px");
+        span_error_message.innerHTML="";
+    } else {
+        input_email.setAttribute("style", "border-color: #FF3838; border-style: solid; border-width: 3px");
+        span_error_message.innerHTML="Email invalide";
+
+    }
+})
