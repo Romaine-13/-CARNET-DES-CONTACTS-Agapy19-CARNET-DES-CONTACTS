@@ -108,3 +108,20 @@ input_txt_nom.addEventListener("blur", ()=>{
 // reset the form
 let btn_renit = document.querySelector(".contain-button__create-clear bg-red")
 console.log(btn_renit);
+
+//  email function
+let input=document.querySelector("input");
+let span=document.querySelector("div-bio__error-message style-error-message");
+email.prevendDefault();
+function validateEmail(email){
+    let emailReg = new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))/i);
+    input.innerText=input.value;
+    return emailReg.test(email);
+ }
+// input.addEventListener("change",()=>{
+//     if(validateEmail(input.value)){
+//         alert("Email  valide");
+//     } else {
+//         alert("Email invalide");
+//     }
+// })
