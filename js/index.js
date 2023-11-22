@@ -110,13 +110,10 @@ let inputs = document.querySelectorAll('input');
 btn.addEventListener('click', () => {
     inputs.forEach(input => input.value = ' ')
 })
-// reset the form
-let btn_renit = document.querySelector(".contain-button__create-clear bg-red")
-console.log(btn_renit);
 
 //  email function
 let input_email = document.querySelector(".div-email__input");
-let span_error_message=document.querySelector(".div-email__error-message");
+let span_error_message = document.querySelector(".div-email__error-message");
 
 
 function validateEmail(email) {
@@ -126,10 +123,44 @@ function validateEmail(email) {
 input_email.addEventListener("blur", () => {
     if (validateEmail(input_email.value)) {
         input_email.setAttribute("style", "border-color: #C4C4C4; border-width: 1px");
-        span_error_message.innerHTML="";
+        span_error_message.innerHTML = "";
     } else {
         input_email.setAttribute("style", "border-color: #FF3838; border-style: solid; border-width: 3px");
-        span_error_message.innerHTML="Email invalide";
+        span_error_message.innerHTML = "Email invalide";
+// validate Phone Number
+let input_phone =  document.querySelector(".div-phone__input")
+let phoneNumber = input_phone
+function validatePhoneNumber() {
+    input_phone=input_phone.value
+        if (input_phone === "") {
+            phoneNumber.setAttribute("style", "border-color: #FF3838; border-style: solid;border-width: 3px");
+            document.querySelector(".div-phone__error-message").textContent = "Enter a valid number";
+            return false;
+        }
+        if (isNaN(input_phone)) {
+            phoneNumber.setAttribute("style", "border-color: #FF3838; border-style: solid;border-width: 3px");
+            document.querySelector(".div-phone__error-message").textContent  = "enter only numeric value";
+            return false;
+        }
+        if (input_phone.length < 10) {
+            phoneNumber.setAttribute("style", "border-color: #FF3838; border-style: solid;border-width: 3px");
+            document.querySelector(".div-phone__error-message").textContent  = "enter 10 digits phone number";
+            return false;
+        }
+        if (input_phone.length > 10) {
+            phoneNumber.setAttribute("style", "border-color: #FF3838; border-style: solid;border-width: 3px");
+            document.querySelector(".div-phone__error-message").textContent  = "enter a valid phone number";
+            return false;
+        }
+        if (input_phone.charAt(0) != 0) {
+            phoneNumber.setAttribute("style", "border-color: #FF3838; border-style: solid;border-width: 3px");
+            document.gquerySelector(".div-phone__error-message").textContent  = "your phone number must start with a 0";
+            return false;
+        }
+        
 
-    }
-})
+}
+
+input_phone.addEventListener("blur", () => {
+    validatePhoneNumber();
+     });
