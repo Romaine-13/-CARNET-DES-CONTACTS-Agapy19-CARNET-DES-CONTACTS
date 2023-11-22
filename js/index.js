@@ -133,3 +133,105 @@ input_email.addEventListener("blur", () => {
 
     }
 })
+
+
+// manage drag and drop 
+const div_image = document.querySelector(".contain-input__div-photo");
+const input_image = document.querySelector(".contain-input__div-photo input")
+
+// link between div_image and input image
+div_image.addEventListener("click", ()=>{
+    input_image.click();
+})
+
+
+input_image.addEventListener("change", function () {
+    // on recupere le fichier selectionné du champ
+    let file = this.files[0]
+    // traitement et affichage image
+    showFile(file)
+  })
+  
+  // si le fichier est drop
+  
+  div_image.addEventListener(
+    "drop",
+    function (event) {
+      // Empêche l'action par défaut (ouvrir comme lien pour certains éléments)
+      event.preventDefault();
+      // Déplace l'élément traîné vers la cible du drop sélectionnée
+      let file  = event.dataTransfer.files[0]
+      showFile(file)
+    },
+    false,
+  );
+  
+  
+  input_image.addEventListener("drag", (event)=>{
+    event.preventDefault()
+    let file = event.dataTransfer.files[0]
+    showFile(file)
+  })
+  
+  // traitement de la phase drag and drop
+  // si l'utilisateur glisse le fichier au dessus du fichier
+  
+  div_image.addEventListener("dragover", (event)=>{
+    event.preventDefault();
+    // headerText.textContent = "Relachez pour uploader l'image"
+    // dropChamp.classList.add("active");
+  })
+  
+  // si le fichier quitte le champ de drag
+  
+  div_image.addEventListener("dragleave", (event)=>{
+  
+    // dropChamp.classList.remove("active");
+  
+  })
+  
+//   // si l'image quitte par dessusle drage
+//   dropChamp.addEventListener("dragleave", (event)=>{
+//     headerText.textContent = "Glisser et deposer pour changer le style"
+//   })
+  
+  function showFile(file) {
+    // on recupère le type de fichier
+    const fileType = file.type;
+
+    const fileSize = file.size;
+
+    const fileExtension = ['image/jpeg', 'image/jpg', 'image/png']
+  
+    // on vérifie la validité du type de fichier
+    if (fileExtension.includes(fileType) && (fileSize/1000000) <= 5) {
+  
+      let fileReader = new FileReader
+  
+      fileReader.readAsDataURL(file);
+  
+      fileReader.onload = () => {
+        let fileUrl = fileReader.result
+  
+        let imageTag = document.createElement("img")
+        imageTag.src = fileUrl;
+        imageTag.alt = 'Image'
+  
+        imageTag.setAttribute("style", "width: 100%; height: 100%; object-fit: contain")
+  
+        div_image.innerHTML = ""
+        div_image.appendChild(imageTag)
+      }
+  
+    }
+    else {
+
+        if (!fileExtension.includes(fileType)) {
+            alert("Format image invalide? Format accepté: jpeg, jpg et png")
+        }
+        else{
+            alert("fichier trop volumineux")
+        }
+      
+    }
+  }
