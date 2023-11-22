@@ -127,6 +127,7 @@ input_email.addEventListener("blur", () => {
     } else {
         input_email.setAttribute("style", "border-color: #FF3838; border-style: solid; border-width: 3px");
         span_error_message.innerHTML = "Email invalide";
+         }  })
 // validate Phone Number
 let input_phone =  document.querySelector(".div-phone__input")
 let phoneNumber = input_phone
@@ -163,4 +164,4 @@ function validatePhoneNumber() {
 
 input_phone.addEventListener("blur", () => {
     validatePhoneNumber();
-     });
+     })
