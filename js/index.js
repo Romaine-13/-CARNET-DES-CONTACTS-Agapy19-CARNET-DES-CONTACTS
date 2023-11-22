@@ -196,6 +196,9 @@ input_image.addEventListener("change", function () {
 //   })
   
   function showFile(file) {
+
+    const span_error_message = document.querySelector(".div-photo__error-message");
+    span_error_message.setAttribute("style", "text-align:center;");
     // on recupère le type de fichier
     const fileType = file.type;
 
@@ -205,32 +208,36 @@ input_image.addEventListener("change", function () {
   
     // on vérifie la validité du type de fichier
     if (fileExtension.includes(fileType) && (fileSize/1000000) <= 5) {
+
+        span_error_message.innerHTML= ""
+
+        div_image.setAttribute("style", "border-color: #C4C4C4; border-width: 1px");
   
-      let fileReader = new FileReader
+        let fileReader = new FileReader
   
-      fileReader.readAsDataURL(file);
-  
-      fileReader.onload = () => {
-        let fileUrl = fileReader.result
-  
-        let imageTag = document.createElement("img")
-        imageTag.src = fileUrl;
-        imageTag.alt = 'Image'
-  
-        imageTag.setAttribute("style", "width: 100%; height: 100%; object-fit: contain")
-  
-        div_image.innerHTML = ""
-        div_image.appendChild(imageTag)
-      }
+        fileReader.readAsDataURL(file);
+    
+        fileReader.onload = () => {
+            let fileUrl = fileReader.result
+    
+            let imageTag = document.createElement("img")
+            imageTag.src = fileUrl;
+            imageTag.alt = 'Image'
+    
+            imageTag.setAttribute("style", "width: 100%; height: 100%; object-fit: contain")
+    
+            div_image.innerHTML = ""
+            div_image.appendChild(imageTag)
+        }
   
     }
     else {
-
+        div_image.setAttribute("style", "border-color: #FF3838; border-width: 3px");
         if (!fileExtension.includes(fileType)) {
-            alert("Format image invalide? Format accepté: jpeg, jpg et png")
+            span_error_message.innerHTML="Format image invalide: Format accepté: jpeg, jpg et png";
         }
         else{
-            alert("fichier trop volumineux")
+            span_error_message.innerHTML = "fichier volumineux: Taille max: 5Mo"
         }
       
     }
