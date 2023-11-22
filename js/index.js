@@ -136,13 +136,10 @@ let inputs = document.querySelectorAll('input');
 btn.addEventListener('click', () => {
     inputs.forEach(input => input.value = ' ')
 })
-// reset the form
-let btn_renit = document.querySelector(".contain-button__create-clear bg-red")
-console.log(btn_renit);
 
 //  email function
 let input_email = document.querySelector(".div-email__input");
-let span_error_message=document.querySelector(".div-email__error-message");
+let span_error_message = document.querySelector(".div-email__error-message");
 
 
 function validateEmail(email) {
@@ -152,58 +149,10 @@ function validateEmail(email) {
 input_email.addEventListener("blur", () => {
     if (validateEmail(input_email.value)) {
         input_email.setAttribute("style", "border-color: #C4C4C4; border-width: 1px");
+        span_error_message.innerHTML="";
     } else {
         input_email.setAttribute("style", "border-color: #FF3838; border-style: solid; border-width: 3px");
-        span_error_message.innerHTML="veillez saisir une adresse mail valide";
+        span_error_message.innerHTML="Email invalide";
 
     }
 })
-// transfert des données vers la liste 
-
-let formulaire_A=document.querySelector(".left-main");
-let formulaire_B=document.querySelector("right-main")
-let btn_create=document.querySelector(".contain-button__create-btn");
-console.log(btn_create);
-btn_create.addEventListener("click", function(event){
-    event.preventDefault();
-    transfert();
-
-});
-function transfert(click) {
-    let formulaire_B=document.createElement(formulaire_B);
-    formulaire_B.innerText="";
-    
-    
- }
-
-
-
-
-
-
-
-
-//  let form = document.createElement('form');
-// form.action = 'https://google.com/search';
-// form.method = 'GET';
-
-// form.innerHTML = '<input name="q" value="test">';
-
-// // le formulaire doit être dans le document pour le soumettre
-// document.body.append(form);
-
-// form.submit();
-
-//  btnAdd.addEventListener("click",function(event){
-//     event.preventDefault();
-//     addTask();
-// });
-
-
-
-
-
-
-
-
-
