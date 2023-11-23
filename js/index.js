@@ -2,18 +2,18 @@
 let array_contacts = [];
 
 //creation and initilize contact object
-let contact = {
-    _prenom: "",
-    _nom: "",
-    _telephone: "",
-    _groupe: "",
-    _email: "",
-    _bio: "",
-    _picture: "",
+let contact = new  {
+    prenom: "",
+    nom: "",
+    telephone: "",
+    groupe: "",
+    email: "",
+    bio: "",
+    picture: "",
 
-    /**
-     * setter of first name
-     * @param {string} pPrenom
+     /**
+      * setter of first name
+      * @param {string} pPrenom
      */
     set prenom(pPrenom) {
         if (validName(pPrenom) == 0) {
@@ -26,32 +26,104 @@ let contact = {
             this._prenom = 1
         }
     },
-    // setter for name
 
-    set nom(name1){
-        if (validName(nom1) == 0) {
-            this._nom = nom1
 
-        } else if (validName(nom1) == -1) {
-            this._nom = nom1
+     /**
+     * setter of  name
+    * @param {string} name1
+     */
+    set nom(name1) {
+        if (validName(name1) == 0) {
+            this._nom = name1
+
+        } else if (validName(name1) == -1) {
+            this._nom = name1
         } else {
             this._nom = 1
-            
+
         }
-        },
+    },
 
-set (name1){
-        if (validName(nom1) == 0) {
-            this._nom = nom1
+    /**
+     * setter of  contact
+     * @param {string} contact1
+     */
+    set telephone(contact1) {
+        if (validName(contact1) == 0) {
+            this._telephone = contact1
 
-        } else if (validName(nom1) == -1) {
-            this._nom = nom1
+        } else if (validName(contact1) == -1) {
+            this._telephone = contact1
         } else {
-            this._nom = 1
-            
+            this._telephone = 1
+
         }
-        },
-    }
+    },
+     /**
+ * setter of  contact
+ * @param {string} monGroup
+ */
+    set groupe(monGroup) {
+        if (validName(monGroup) == 0) {
+            this._groupe = monGroup
+
+        } else if (validName(monGroup) == -1) {
+            this._groupe = monGroup
+        } else {
+            this._groupe = 1
+
+        }
+    },
+
+    /**
+* setter of  contact
+* @param {string} monEmail
+*/
+    set mail(monEmail) {
+        if (validName(monEmail) == 0) {
+            this._email = monEmail
+
+        } else if (validName(monEmail) == -1) {
+            this._email = monEmail
+        } else {
+            this._email = 1
+
+        }
+    },
+
+    /**
+* setter of  contact
+* @param {string} myBio
+*/
+    set bio(myBio) {
+        if (validName(myBio) == 0) {
+            this._bio = myBio
+
+        } else if (validName(myBio) == -1) {
+            this._bio = myBio
+        } else {
+            this._bio = 1
+
+        }
+    },
+
+    /**
+* setter of  contact
+* @param {string} maPhoto
+*/
+    set photo(maPhoto) {
+        if (validName(maPhoto) == 0) {
+            this._picture = maPhoto
+
+        } else if (validName(maPhoto) == -1) {
+            this._picture= maPhoto
+        } else {
+            this._picture = 1
+
+        }
+    },
+
+}
 
 
 //Link objects HTML and Js by DOM API
@@ -94,6 +166,7 @@ function ManageInputName(error_message1, error_message2, error_element, input_el
     if (out_state == 0) {
         error_element.textContent = "";
         input_element.setAttribute("style", "border-color: #C4C4C4; border-width: 1px");
+
     }
     else {
         input_element.setAttribute("style", "border-color: #FF3838; border-style: solid; border-width: 3px");
@@ -141,7 +214,6 @@ btn.addEventListener('click', () => {
 let input_email = document.querySelector(".div-email__input");
 let span_error_message = document.querySelector(".div-email__error-message");
 
-
 function validateEmail(email) {
     let emailReg = new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))/i);
     return emailReg.test(email);
@@ -149,10 +221,18 @@ function validateEmail(email) {
 input_email.addEventListener("blur", () => {
     if (validateEmail(input_email.value)) {
         input_email.setAttribute("style", "border-color: #C4C4C4; border-width: 1px");
-        span_error_message.innerHTML="";
+        span_error_message.innerHTML = "";
     } else {
         input_email.setAttribute("style", "border-color: #FF3838; border-style: solid; border-width: 3px");
-        span_error_message.innerHTML="Email invalide";
+        span_error_message.innerHTML = "veiller saisir une adresse mail valide";
+
 
     }
+})
+let btn_create = document.querySelector(".contain-button__create-btn")
+let formulaire_B = document.querySelector(".right-main")
+btn_create.addEventListener("click",() => {
+
+
+    
 })
