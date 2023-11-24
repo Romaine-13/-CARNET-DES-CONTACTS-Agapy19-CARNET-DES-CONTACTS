@@ -125,7 +125,9 @@ let contact = new  {
     },
 
 }
+    
 
+ b8affec296707edaa993745f8cbf3d48080bd1c3
 
 //Link objects HTML and Js by DOM API
 
@@ -279,8 +281,13 @@ div_image.addEventListener("click", ()=>{
 let btn_create = document.querySelector(".contain-button__create-btn")
 let formulaire_B = document.querySelector(".right-main")
 btn_create.addEventListener("click",() => {
- 
+
+
+    
 })
+
+
+
 input_image.addEventListener("change", function () {
     // on recupere le fichier selectionné du champ
     let file = this.files[0]
@@ -378,4 +385,4 @@ input_image.addEventListener("change", function () {
       
     }
   }
-
+>>>>>>> b8affec296707edaa993745f8cbf3d48080bd1c3
