@@ -228,7 +228,8 @@ input_email.addEventListener("blur", () => {
     } else {
         input_email.setAttribute("style", "border-color: #FF3838; border-style: solid; border-width: 3px");
         span_error_message.innerHTML = "Email invalide";
-         }  })
+    }
+})
 // validate Phone Number
 let input_phone = document.querySelector(".div-phone__input")
 let phoneNumber = input_phone
@@ -265,8 +266,8 @@ function validatePhoneNumber() {
 
 input_phone.addEventListener("blur", () => {
     validatePhoneNumber();
-     })
-    
+})
+
 
 
 // manage drag and drop 
@@ -383,4 +384,18 @@ function showFile(file) {
         }
 
     }
-  }
+}
+// to save data
+// get data form input box
+var newData = document.querySelectorAll("input").value;
+// function saveData() {
+//     // if there is nothing saved at the start then save an empty array
+//     if (localStorage.getItem('data') == null) {
+//         localStorage.setItem('data', ' []');
+//     }
+//     // get old data and slap it to the new data
+//     var oldData = JSON.parse(localStorage.getItem('data'));
+//     oldData.push(newData);
+//     //save the old and new data to the local storage
+//     localStorage.setItem('data', JSON.stringify(oldData));
+// } 
