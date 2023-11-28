@@ -257,7 +257,7 @@ function validatePhoneNumber() {
     }
     if (input_phone.charAt(0) != 0) {
         phoneNumber.setAttribute("style", "border-color: #FF3838; border-style: solid;border-width: 3px");
-        document.gquerySelector(".div-phone__error-message").textContent = "your phone number must start with a 0";
+        document.querySelector(".div-phone__error-message").textContent = "your phone number must start with a 0";
         return false;
     }
 
@@ -385,10 +385,14 @@ function showFile(file) {
 
     }
 }
-// to save data
-// get data form input box
 
-function saveData() {
-    var newData = document.querySelectorAll("input").value;
-    console.log(newData);
-} 
+// Save data
+function saveData(arrayContacts) {
+    localStorage . setItem ( 'contacts'  , JSON  . stringify ( arrayContacts )); 
+}
+function getData() {
+    return  JSON.parse(localStorage.getItem('contacts'));
+   
+}
+
+
