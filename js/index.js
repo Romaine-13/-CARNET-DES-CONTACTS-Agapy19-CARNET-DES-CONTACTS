@@ -387,15 +387,8 @@ function showFile(file) {
 }
 // to save data
 // get data form input box
-var newData = document.querySelectorAll("input").value;
-// function saveData() {
-//     // if there is nothing saved at the start then save an empty array
-//     if (localStorage.getItem('data') == null) {
-//         localStorage.setItem('data', ' []');
-//     }
-//     // get old data and slap it to the new data
-//     var oldData = JSON.parse(localStorage.getItem('data'));
-//     oldData.push(newData);
-//     //save the old and new data to the local storage
-//     localStorage.setItem('data', JSON.stringify(oldData));
-// } 
+
+function saveData() {
+    var newData = document.querySelectorAll("input").value;
+    console.log(newData);
+} 
