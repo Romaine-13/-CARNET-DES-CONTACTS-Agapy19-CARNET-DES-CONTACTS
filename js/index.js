@@ -1,32 +1,23 @@
 //initialize array of contact persons
-let array_contacts = [];
+
+let array_contacts;
+
+if (getData() === null) {
+    array_contacts = []
+} else {
+    array_contacts = getData()
+}
 
 //creation and initilize contact object
-let contact = {
-    _prenom: "",
-    _nom: "",
-    _telephone: "",
-    _groupe: "",
-    _email: "",
-    _bio: "",
-    _picture: "",
+let contact = new Object()
+contact.prenom = "";
+contact.nom = "";
+contact.telephone = "";
+contact.groupe = "G1";
+contact.email = "";
+contact.bio = "my name";
+contact.picture = "";
 
-    /**
-     * setter of name
-     * @param {string} pPrenom
-     */
-    set prenom(pPrenom) {
-        if (validName(pPrenom) == 0) {
-            this._prenom = pPrenom
-        }
-
-        else if (validName(pPrenom) == -1) {
-            this._prenom = -1;
-        } else {
-            this._prenom = 1
-        }
-    }
-}
 
 //Link objects HTML and Js by DOM API
 
@@ -68,6 +59,7 @@ function ManageInputName(error_message1, error_message2, error_element, input_el
     if (out_state == 0) {
         error_element.textContent = "";
         input_element.setAttribute("style", "border-color: #C4C4C4; border-width: 1px");
+        return true;
     }
     else {
         input_element.setAttribute("style", "border-color: #FF3838; border-style: solid; border-width: 3px");
@@ -78,6 +70,7 @@ function ManageInputName(error_message1, error_message2, error_element, input_el
         else {
             error_element.textContent = error_message2;
         }
+        return false
     }
 }
 
@@ -92,8 +85,14 @@ input_txt_prenom.addEventListener("blur", () => {
     message1 = "Votre prenom est trop court, Taille min acceptée: 3";
     message2 = "Votre prenom est trop long, Taille max acceptée: 50";
     element_error = document.querySelector(".div-prenom__error-message");
-    ManageInputName(message1, message2, element_error, input_txt_prenom);
+    let valid_prenom = ManageInputName(message1, message2, element_error, input_txt_prenom);
+    
+    if (valid_prenom) {
+        contact.prenom = input_txt_prenom.value;
+    }
 })
+
+
 
 
 //input for last name
@@ -102,13 +101,35 @@ input_txt_nom.addEventListener("blur", () => {
     message1 = "Votre nom est trop court, Taille min acceptée: 3";
     message2 = "Votre nom est trop long, Taille max acceptée: 50";
     element_error = document.querySelector(".div-nom__error-message");
-    ManageInputName(message1, message2, element_error, input_txt_nom);
+    valid_nom = ManageInputName(message1, message2, element_error, input_txt_nom);
+
+    if (valid_nom) {
+        contact.nom = input_txt_nom.value;
+    }
+
+    console.log(contact.nom);
 })
 // reset form
 let btn = document.querySelector('.contain-button__create-clear')
 let inputs = document.querySelectorAll('input');
+
+function clear(params) {
+    for (let index = 0; index < inputs.length; index++) {
+        inputs[index].value = "";
+    }
+
+    contact.prenom = "";
+    contact.nom = "";
+    contact.telephone = "";
+    contact.groupe = "";
+    contact.email = "";
+    contact.bio = "";
+    contact.picture = "";
+
+}
+
 btn.addEventListener('click', () => {
-    inputs.forEach(input => input.value = ' ')
+    clear();
 })
 
 //  email function
@@ -124,47 +145,61 @@ input_email.addEventListener("blur", () => {
     if (validateEmail(input_email.value)) {
         input_email.setAttribute("style", "border-color: #C4C4C4; border-width: 1px");
         span_error_message.innerHTML = "";
-    } else {
+        contact.email = input_email.value;
+        
+    } 
+    else {
         input_email.setAttribute("style", "border-color: #FF3838; border-style: solid; border-width: 3px");
         span_error_message.innerHTML = "Email invalide";
-         }  })
+    }  
+})
+
+
 // validate Phone Number
 let input_phone =  document.querySelector(".div-phone__input")
 let phoneNumber = input_phone
-function validatePhoneNumber() {
-    input_phone=input_phone.value
-        if (input_phone === "") {
+function validatePhoneNumber(pPhone) {
+    pPhone = pPhone.value
+        if (pPhone === "") {
             phoneNumber.setAttribute("style", "border-color: #FF3838; border-style: solid;border-width: 3px");
             document.querySelector(".div-phone__error-message").textContent = "Enter a valid number";
             return false;
         }
-        if (isNaN(input_phone)) {
+        else if (isNaN(pPhone)) {
             phoneNumber.setAttribute("style", "border-color: #FF3838; border-style: solid;border-width: 3px");
             document.querySelector(".div-phone__error-message").textContent  = "enter only numeric value";
             return false;
         }
-        if (input_phone.length < 10) {
+        else if (pPhone.length < 10) {
             phoneNumber.setAttribute("style", "border-color: #FF3838; border-style: solid;border-width: 3px");
             document.querySelector(".div-phone__error-message").textContent  = "enter 10 digits phone number";
             return false;
         }
-        if (input_phone.length > 10) {
+        else if (pPhone.length > 10) {
             phoneNumber.setAttribute("style", "border-color: #FF3838; border-style: solid;border-width: 3px");
             document.querySelector(".div-phone__error-message").textContent  = "enter a valid phone number";
             return false;
         }
-        if (input_phone.charAt(0) != 0) {
+        else if (pPhone.charAt(0) != 0) {
             phoneNumber.setAttribute("style", "border-color: #FF3838; border-style: solid;border-width: 3px");
             document.gquerySelector(".div-phone__error-message").textContent  = "your phone number must start with a 0";
             return false;
         }
-        
 
+        else{
+            phoneNumber.setAttribute("style", "border-color: #C4C4C4; border-width: 1px");
+            document.querySelector(".div-phone__error-message").textContent  = "";
+            return true
+        }
+        
 }
 
 input_phone.addEventListener("blur", () => {
-    validatePhoneNumber();
-     })
+    let valid_phone = validatePhoneNumber(input_phone);
+    if (valid_phone) {
+        contact.telephone = input_phone.value
+    }
+})
     
 
 
@@ -227,6 +262,7 @@ input_image.addEventListener("change", function () {
 //   dropChamp.addEventListener("dragleave", (event)=>{
 //     headerText.textContent = "Glisser et deposer pour changer le style"
 //   })
+
   
   function showFile(file) {
 
@@ -252,9 +288,11 @@ input_image.addEventListener("change", function () {
     
         fileReader.onload = () => {
             let fileUrl = fileReader.result
-    
             let imageTag = document.createElement("img")
             imageTag.src = fileUrl;
+
+            //stock iurl image 
+            contact.picture = fileUrl
             imageTag.alt = 'Image'
     
             imageTag.setAttribute("style", "width: 100%; height: 100%; object-fit: contain")
@@ -275,3 +313,122 @@ input_image.addEventListener("change", function () {
       
     }
   }
+
+
+/**
+ * show data of contact
+ * @param {Array} pArrayContacts 
+ */
+function showContact(pArrayContacts) {
+
+    for (let index = 0; index < pArrayContacts.length; index++) {
+
+        // link html and js by DOM
+        const right_main = document.querySelector(".right-main");
+        const div_contain_contain_info = document.createElement("div");
+        const contain_info_div_img = document.createElement("div");
+        const image_profil = document.createElement("img");
+        const div_header = document.createElement("div");
+        const contain_info_div_text = document.createElement("div");
+        const nom_groupe = document.createElement("strong");
+        const div_paragraphe_icon = document.createElement("p");
+        const icon_modify = document.createElement("i");
+        const icon_delete = document.createElement("i");
+        const p_phone = document.createElement("p");
+        const p_a_propos = document.createElement("p");
+
+        // add class Name to element created
+        div_contain_contain_info.classList.add("right-main__contain-info");
+        contain_info_div_img.classList.add("right-main__contain-info__div-img");
+        div_header.classList.add("contain-info__div-text__div-header")
+        contain_info_div_text.classList.add("right-main__contain-info__div-text");
+        nom_groupe.classList.add("div-text__div-header__nom-groupe");
+        p_phone.classList.add("contain-info__div-text__phone");
+        p_a_propos.classList.add("contain-info__div-text__bio");
+        image_profil.classList.add("img-contact");
+
+
+        // complet text content in element
+        icon_modify.innerHTML = `
+            <svg xmlns="http://www.w3.org/2000/svg" height="1em" class="ico-modify"
+            viewBox="0 0 640 512">
+            <path
+                d="M224 256A128 128 0 1 0 224 0a128 128 0 1 0 0 256zm-45.7 48C79.8 304 0 383.8 0 482.3C0 498.7 13.3 512 29.7 512H322.8c-3.1-8.8-3.7-18.4-1.4-27.8l15-60.1c2.8-11.3 8.6-21.5 16.8-29.7l40.3-40.3c-32.1-31-75.7-50.1-123.9-50.1H178.3zm435.5-68.3c-15.6-15.6-40.9-15.6-56.6 0l-29.4 29.4 71 71 29.4-29.4c15.6-15.6 15.6-40.9 0-56.6l-14.4-14.4zM375.9 417c-4.1 4.1-7 9.2-8.4 14.9l-15 60.1c-1.4 5.5 .2 11.2 4.2 15.2s9.7 5.6 15.2 4.2l60.1-15c5.6-1.4 10.8-4.3 14.9-8.4L576.1 358.7l-71-71L375.9 417z" />
+            </svg>
+            
+        `
+
+        icon_delete.innerHTML = ` 
+            <svg xmlns="http://www.w3.org/2000/svg" height="1em" class="ico-delete"
+            viewBox="0 0 448 512">
+            <path
+                d="M135.2 17.7C140.6 6.8 151.7 0 163.8 0H284.2c12.1 0 23.2 6.8 28.6 17.7L320 32h96c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 96 0 81.7 0 64S14.3 32 32 32h96l7.2-14.3zM32 128H416V448c0 35.3-28.7 64-64 64H96c-35.3 0-64-28.7-64-64V128zm96 64c-8.8 0-16 7.2-16 16V432c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16zm96 0c-8.8 0-16 7.2-16 16V432c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16zm96 0c-8.8 0-16 7.2-16 16V432c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16z" />
+            </svg>
+        `
+        let prenom_show = pArrayContacts[index].prenom;
+        let nom_show = pArrayContacts[index].nom;
+        let groupe_show = pArrayContacts[index].groupe;
+        let telephone_show = pArrayContacts[index].telephone;
+        let biographie_show =  pArrayContacts[index].bio;
+        let src_picture = pArrayContacts[index].picture;
+
+        // full element of contact list
+        p_a_propos.innerHTML = "<span>What is " + prenom_show +" "+ nom_show +"?<br>"+biographie_show
+        p_phone.innerText = telephone_show;
+        nom_groupe.innerText = prenom_show +" "+ nom_show +" - "+groupe_show
+
+        image_profil.src = src_picture;
+        image_profil.alt = "photo profil de "+ prenom_show +" "+ nom_show;
+        // include children element in parents
+        div_paragraphe_icon.appendChild(icon_modify);
+        div_paragraphe_icon.appendChild(icon_delete);
+        div_header.appendChild(nom_groupe);
+        div_header.appendChild(div_paragraphe_icon);
+        contain_info_div_img.appendChild(image_profil);
+        contain_info_div_text.appendChild(div_header);;
+        contain_info_div_text.appendChild(p_phone);
+        contain_info_div_text.appendChild(p_a_propos);
+
+        div_contain_contain_info.appendChild(contain_info_div_img);
+        div_contain_contain_info.appendChild(contain_info_div_text);
+        right_main.appendChild(div_contain_contain_info);
+
+        document.querySelector(".ico-delete").classList.add("d"+index);
+        document.querySelector(".ico-modify").classList.add("m"+index);
+        
+    }
+
+}
+
+// créer contact
+
+function addContacts(pContact) {
+    array_contacts.push(pContact)
+}
+
+const btn__create = document.querySelector(".contain-button__create-btn")
+
+btn__create.addEventListener("click",()=>{
+    if (contact.prenom == "" ||
+    contact.nom == "" ||
+    contact.telephone == "" ||
+    contact.groupe == "" ||
+    contact.email == "" ||
+    contact.bio == "" ||
+    contact.picture == "") {
+        
+        alert("veuillez renseigner tous les champs obligatoires");
+    } else {
+        addContacts(contact);
+        showContact(array_contacts);
+    }
+})
+
+// Save data
+function saveData(arrayContacts) {
+    localStorage . setItem ( 'contacts'  , JSON  . stringify ( arrayContacts )); 
+}
+function getData() {
+    return  JSON.parse(localStorage.getItem('contacts'));
+   
+}
