@@ -222,7 +222,7 @@ section{
     width: 30%;
 }
 
-.right-main__contain-info__div-img img{
+.img-contact{
     width: 140px;
     height: 140px;
     border-radius: 10rem;
@@ -373,7 +373,7 @@ section{
         padding-block: 20px;
     }
 
-    .right-main__contain-info__div-img img{
+    .img-contact{
         width: 200px;
         height: 200px;
         border-radius: 10rem;
