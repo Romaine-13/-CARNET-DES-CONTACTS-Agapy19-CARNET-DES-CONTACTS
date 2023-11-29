@@ -6,6 +6,7 @@ if (getData() === null) {
     array_contacts = []
 } else {
     array_contacts = getData();
+    document.querySelector(".contain-content").innerHTML  = ""
     showContact(array_contacts)
 }
 
@@ -325,7 +326,7 @@ function showContact(pArrayContacts) {
     for (let index = 0; index < pArrayContacts.length; index++) {
 
         // link html and js by DOM
-        const right_main = document.querySelector(".right-main");
+        const contain_content = document.querySelector(".contain-content");
         const div_contain_contain_info = document.createElement("div");
         const contain_info_div_img = document.createElement("div");
         const image_profil = document.createElement("img");
@@ -373,13 +374,12 @@ function showContact(pArrayContacts) {
         let biographie_show =  pArrayContacts[index].bio;
         let src_picture = pArrayContacts[index].picture;
 
-        div_contain_contain_info.innerHTML = ""
+        
 
         // full element of contact list
         p_a_propos.innerHTML = "<span>What is " + prenom_show +" "+ nom_show +"?<br>"+biographie_show
         p_phone.innerText = telephone_show;
         nom_groupe.innerText = prenom_show +" "+ nom_show +" - "+groupe_show
-
         image_profil.src = src_picture;
         image_profil.alt = "photo profil de "+ prenom_show +" "+ nom_show;
         // include children element in parents
@@ -394,7 +394,7 @@ function showContact(pArrayContacts) {
 
         div_contain_contain_info.appendChild(contain_info_div_img);
         div_contain_contain_info.appendChild(contain_info_div_text);
-        right_main.appendChild(div_contain_contain_info);
+        contain_content.appendChild(div_contain_contain_info);
 
         document.querySelector(".ico-delete").classList.add("d"+index);
         document.querySelector(".ico-modify").classList.add("m"+index);
@@ -424,7 +424,9 @@ btn__create.addEventListener("click",()=>{
         alert("veuillez renseigner tous les champs obligatoires");
     } else {
         addContacts(contact);
+        document.querySelector(".contain-content").innerHTML  = ""
         showContact(array_contacts);
+        clear()
     }
 })
 
