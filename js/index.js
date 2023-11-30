@@ -396,17 +396,29 @@ function showContact(pArrayContacts) {
         div_contain_contain_info.appendChild(contain_info_div_text);
         contain_content.appendChild(div_contain_contain_info);
 
-        document.querySelector(".ico-delete").classList.add("d"+index);
-        document.querySelector(".ico-modify").classList.add("m"+index);
+        icon_delete_all = document.querySelectorAll(".ico-delete");
+        icon_modify_all = document.querySelectorAll(".ico-modify");
+        setClassIcon(icon_delete_all, icon_modify_all);
         
     }
 
 }
 
+function setClassIcon(p_icond_deletes, p_icond_modifies) {
+
+    
+
+    for (let index = 0; index < p_icond_deletes.length; index++) {
+        p_icond_deletes[index].classList.add("d"+index);
+        p_icond_modifies[index].classList.add("m"+index);
+        
+    }
+}
+
 // créer contact
 
 function addContacts(pContact) {
-    array_contacts.push(pContact)
+    array_contacts.unshift(pContact)
     saveData(array_contacts)
 }
 
