@@ -181,7 +181,7 @@ function validatePhoneNumber(pPhone) {
         }
         else if (pPhone.charAt(0) != 0) {
             phoneNumber.setAttribute("style", "border-color: #FF3838; border-style: solid;border-width: 3px");
-            document.gquerySelector(".div-phone__error-message").textContent  = "your phone number must start with a 0";
+            document.querySelector(".div-phone__error-message").textContent  = "your phone number must start with a 0";
             return false;
         }
 
