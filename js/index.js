@@ -140,6 +140,7 @@ let span_error_message = document.querySelector(".div-email__error-message");
 
 
 function validateEmail(email) {
+    
     let emailReg = new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))/i);
     return emailReg.test(email);
 }
@@ -450,3 +451,27 @@ function getData() {
     return  JSON.parse(localStorage.getItem('contacts'));
    
 }
+
+// //   validation groupe
+
+let team_input = document.querySelector(".div-groupe__input");
+let span_error_messag = document.querySelector(".div-groupe__error-message");
+// let team_input = team_input.value
+function validateGroupe(team2) {
+    const RegExp = /[a-zA-Z0-9]{10,20}/;
+    return RegExp.test(team2);
+    
+}
+team_input.addEventListener("blur", () => {
+    if (validateGroupe(team_input.value)){
+        team_input.setAttribute("style", "border-color: #C4C4C4; border-width: 1px");
+        span_error_message.innerHTML = "";
+    } else{
+        team_input.setAttribute("style", "border-color: #FF3838; border-style: solid; border-width: 3px");
+        span_error_messag .innerHTML ="veiller saisir la longueur exacte ";
+
+    }
+})
+
+
+let biographie_show
