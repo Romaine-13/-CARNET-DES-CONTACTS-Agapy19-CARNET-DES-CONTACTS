@@ -75,10 +75,6 @@ function ManageInputName(error_message1, error_message2, error_element, input_el
         return false
     }
 }
-
-
-
-
 //Managment events input changed of input
 
 //input for first name
@@ -474,4 +470,19 @@ team_input.addEventListener("blur", () => {
 })
 
 
-let biographie_show
+let biographie= document.querySelector(".div-bio__input");
+let span=document.querySelector(".div-bio__error-message");
+function validBio() {
+    let biographie=validLenghBio(biographie.value); 
+    if(biographie ==""){
+        span.innerText="saisi un text"
+        console.log(biographie);
+    // }else{
+
+
+ }
+    
+}
+
+
+    
