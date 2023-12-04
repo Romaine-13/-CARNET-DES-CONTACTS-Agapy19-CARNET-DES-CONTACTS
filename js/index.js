@@ -1,7 +1,6 @@
 //initialize array of contact persons
 
 let array_contacts;
-
 if (getData() === null) {
     array_contacts = []
 } else {
@@ -9,7 +8,6 @@ if (getData() === null) {
     document.querySelector(".contain-content").innerHTML = ""
     showContact(array_contacts)
 }
-
 //creation and initilize contact object
 let contact = new Object()
 contact.prenom = "";
@@ -19,13 +17,9 @@ contact.groupe = "G1";
 contact.email = "";
 contact.bio = "my name";
 contact.picture = "";
-
-
 //Link objects HTML and Js by DOM API
-
 const input_txt_prenom = document.querySelector(".div-prenom__input");
 const input_txt_nom = document.querySelector(".div-nom__input");
-
 /**
  * function to validate content
  * if return is -1: length of name is < 3
@@ -38,14 +32,12 @@ function validLengthName(param_name) {
     if (param_name.length >= 3 && param_name.length <= 50) {
         return 0
     }
-
     else if (param_name.length < 3) {
         return -1
     } else {
         return 1
     }
 }
-
 /**
  * Manage Input Name
  * first Name
@@ -54,7 +46,6 @@ function validLengthName(param_name) {
  * @param {string} error_message 
  * @param {object} error_element 
  */
-
 function ManageInputName(error_message1, error_message2, error_element, input_element) {
     let out_state = validLengthName(input_element.value);
 
@@ -76,7 +67,6 @@ function ManageInputName(error_message1, error_message2, error_element, input_el
     }
 }
 //Managment events input changed of input
-
 //input for first name
 input_txt_prenom.addEventListener("blur", () => {
     let message1, message2, element_error;
@@ -89,10 +79,6 @@ input_txt_prenom.addEventListener("blur", () => {
         contact.prenom = input_txt_prenom.value;
     }
 })
-
-
-
-
 //input for last name
 input_txt_nom.addEventListener("blur", () => {
     let message1, message2, element_error;
@@ -104,18 +90,15 @@ input_txt_nom.addEventListener("blur", () => {
     if (valid_nom) {
         contact.nom = input_txt_nom.value;
     }
-
     console.log(contact.nom);
 })
 // reset form
 let btn = document.querySelector('.contain-button__create-clear')
 let inputs = document.querySelectorAll('input');
-
-function clear(params) {
+function clear() {
     for (let index = 0; index < inputs.length; index++) {
         inputs[index].value = "";
     }
-
     contact.prenom = "";
     contact.nom = "";
     contact.telephone = "";
@@ -123,20 +106,19 @@ function clear(params) {
     contact.email = "";
     contact.bio = "";
     contact.picture = "";
-
 }
-
 btn.addEventListener('click', () => {
     clear();
 })
-
+// Message error email
+function message_error_email() {
+    input_email.setAttribute("style", "border-color: #FF3838; border-style: solid; border-width: 3px");
+    span_error_message.innerHTML = "Email invalide";
+}
 //  email function
-let input_email = document.querySelector(".div-email__input");
 let span_error_message = document.querySelector(".div-email__error-message");
-
-
+let input_email = document.querySelector(".div-email__input");
 function validateEmail(email) {
-    
     let emailReg = new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))/i);
     return emailReg.test(email);
 }
@@ -145,49 +127,53 @@ input_email.addEventListener("blur", () => {
         input_email.setAttribute("style", "border-color: #C4C4C4; border-width: 1px");
         span_error_message.innerHTML = "";
         contact.email = input_email.value;
-
     }
     else {
-        input_email.setAttribute("style", "border-color: #FF3838; border-style: solid; border-width: 3px");
-        span_error_message.innerHTML = "Email invalide";
+      message_error_email();
     }
 })
-
-
+// Message error phone
+function message_error_phone() {
+    phoneNumber.setAttribute("style", "border-color: #FF3838; border-style: solid;border-width: 3px");
+    document.querySelector(".div-phone__error-message").textContent = "Enter a valid number";
+    return false;
+}
 // validate Phone Number
 let input_phone = document.querySelector(".div-phone__input")
 let phoneNumber = input_phone
-
 function validatePhoneNumber(pPhone) {
     // fill in the telephone field (Orange, Vodacom, Airtel, Africell format)
     const regNumber = /^084|085|080|089|081|082|099|097|090/;
-
     pPhone = pPhone.value
     if (regNumber.test(pPhone)) {
         phoneNumber.setAttribute("style", "border-color: #C4C4C4; border-width: 1px");
-        document.querySelector(".div-phone__error-message").textContent = "";
-        return true;
+       return true;
         
     }
-    else{
-
-        phoneNumber.setAttribute("style", "border-color: #FF3838; border-style: solid;border-width: 3px");
-        document.querySelector(".div-phone__error-message").textContent = "enter a valid number";
-        return false;
+    else {
+        if (isNaN(pPhone)) {
+            message_error_phone();
+        }
+        else if (pPhone.length < 10) {
+            message_error_phone();
+        }
+        else if (pPhone.length > 10) {
+            message_error_phone();
+        }
+        else if (pPhone.charAt(0) != 0) {
+            message_error_phone();
+        }
+        else {
+            message_error_phone();
+        }
     }
-    
-
 }
-
 input_phone.addEventListener("blur", () => {
     let valid_phone = validatePhoneNumber(input_phone);
     if (valid_phone) {
         contact.telephone = input_phone.value
     }
 })
-
-
-
 // manage drag and drop 
 const div_image = document.querySelector(".contain-input__div-photo");
 const input_image = document.querySelector(".contain-input__div-photo input")
@@ -196,15 +182,12 @@ const input_image = document.querySelector(".contain-input__div-photo input")
 div_image.addEventListener("click", () => {
     input_image.click();
 })
-
-
 input_image.addEventListener("change", function () {
     // on recupere le fichier selectionné du champ
     let file = this.files[0]
     // traitement et affichage image
     showFile(file)
 })
-
 // si le fichier est drop
 
 div_image.addEventListener(
@@ -356,9 +339,6 @@ function showContact(pArrayContacts) {
         let telephone_show = pArrayContacts[index].telephone;
         let biographie_show = pArrayContacts[index].bio;
         let src_picture = pArrayContacts[index].picture;
-
-
-
         // full element of contact list
         p_a_propos.innerHTML = "<span>What is " + prenom_show + " " + nom_show + "?<br>" + biographie_show
         p_phone.innerText = telephone_show;
@@ -425,33 +405,15 @@ btn__create.addEventListener("click", () => {
     }
 })
 
-// Save data
-function saveData(arrayContacts) {
-    localStorage.setItem('contacts', JSON.stringify(arrayContacts));
+/**
+ * cette fonction permet d'enregistrer dans la base des données tout les contacts 
+ * 
+ * @param {Array} contacts 
+ */
+function saveData(contacts) {
+    localStorage.setItem('contacts', JSON.stringify(contacts));
 }
 function getData() {
-    return  JSON.parse(localStorage.getItem('contacts'));
-   
-}
-
-// //   validation groupe
-
-let team_input = document.querySelector(".div-groupe__input");
-let span_error_messag = document.querySelector(".div-groupe__error-message");
-// let team_input = team_input.value
-function validateGroupe(team2) {
-    const RegExp = /[a-zA-Z0-9]{10,20}/;
-    return RegExp.test(team2);
-    
-}
-team_input.addEventListener("blur", () => {
-    if (validateGroupe(team_input.value)){
-        team_input.setAttribute("style", "border-color: #C4C4C4; border-width: 1px");
-        span_error_message.innerHTML = "";
-    } else{
-        team_input.setAttribute("style", "border-color: #FF3838; border-style: solid; border-width: 3px");
-        span_error_messag .innerHTML ="veiller saisir la longueur exacte ";
-
-    }
-})
     return JSON.parse(localStorage.getItem('contacts'));
+
+}
