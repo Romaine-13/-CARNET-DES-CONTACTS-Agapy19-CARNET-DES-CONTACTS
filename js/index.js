@@ -9,22 +9,23 @@ if (getData() === null) {
     document.querySelector(".contain-content").innerHTML  = ""
     showContact(array_contacts)
 }
-
 //creation and initilize contact object
 let contact = new Object()
-contact.prenom = "";
-contact.nom = "";
-contact.telephone = "";
-contact.groupe = "G1";
-contact.email = "";
-contact.bio = "my name";
-contact.picture = "";
-
 
 //Link objects HTML and Js by DOM API
-
 const input_txt_prenom = document.querySelector(".div-prenom__input");
 const input_txt_nom = document.querySelector(".div-nom__input");
+let input_email = document.querySelector(".div-email__input");
+let span_error_message = document.querySelector(".div-email__error-message");
+let input_phone =  document.querySelector(".div-phone__input");
+let phoneNumber = input_phone
+const div_image = document.querySelector(".contain-input__div-photo");
+const input_image = document.querySelector(".contain-input__div-photo input")
+let team_input = document.querySelector(".div-groupe__input");
+let span_error_messag = document.querySelector(".div-groupe__error-message");
+let btn = document.querySelector('.contain-button__create-clear');
+let inputs = document.querySelectorAll('input');
+const bio_input= document.querySelector('.div-bio__input');
 
 /**
  * function to validate content
@@ -38,7 +39,6 @@ function validLengthName(param_name) {
     if (param_name.length >= 3 && param_name.length <= 50) {
         return 0
     }
-
     else if (param_name.length < 3) {
         return -1
     } else {
@@ -57,7 +57,6 @@ function validLengthName(param_name) {
 
 function ManageInputName(error_message1, error_message2, error_element, input_element) {
     let out_state = validLengthName(input_element.value);
-
     if (out_state == 0) {
         error_element.textContent = "";
         input_element.setAttribute("style", "border-color: #C4C4C4; border-width: 1px");
@@ -90,9 +89,6 @@ input_txt_prenom.addEventListener("blur", () => {
     }
 })
 
-
-
-
 //input for last name
 input_txt_nom.addEventListener("blur", () => {
     let message1, message2, element_error;
@@ -104,18 +100,12 @@ input_txt_nom.addEventListener("blur", () => {
     if (valid_nom) {
         contact.nom = input_txt_nom.value;
     }
-
-    console.log(contact.nom);
 })
 // reset form
-let btn = document.querySelector('.contain-button__create-clear')
-let inputs = document.querySelectorAll('input');
-
 function clear(params) {
     for (let index = 0; index < inputs.length; index++) {
         inputs[index].value = "";
     }
-
     contact.prenom = "";
     contact.nom = "";
     contact.telephone = "";
@@ -125,16 +115,10 @@ function clear(params) {
     contact.picture = "";
 
 }
-
 btn.addEventListener('click', () => {
     clear();
 })
-
 //  email function
-let input_email = document.querySelector(".div-email__input");
-let span_error_message = document.querySelector(".div-email__error-message");
-
-
 function validateEmail(email) {
     
     let emailReg = new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))/i);
@@ -144,19 +128,14 @@ input_email.addEventListener("blur", () => {
     if (validateEmail(input_email.value)) {
         input_email.setAttribute("style", "border-color: #C4C4C4; border-width: 1px");
         span_error_message.innerHTML = "";
-        contact.email = input_email.value;
-        
+        contact.email = input_email.value;    
     } 
     else {
         input_email.setAttribute("style", "border-color: #FF3838; border-style: solid; border-width: 3px");
         span_error_message.innerHTML = "Email invalide";
     }  
 })
-
-
 // validate Phone Number
-let input_phone =  document.querySelector(".div-phone__input")
-let phoneNumber = input_phone
 function validatePhoneNumber(pPhone) {
     pPhone = pPhone.value
         if (pPhone === "") {
@@ -199,28 +178,19 @@ input_phone.addEventListener("blur", () => {
         contact.telephone = input_phone.value
     }
 })
-    
-
-
 // manage drag and drop 
-const div_image = document.querySelector(".contain-input__div-photo");
-const input_image = document.querySelector(".contain-input__div-photo input")
 
 // link between div_image and input image
 div_image.addEventListener("click", ()=>{
     input_image.click();
 })
-
-
 input_image.addEventListener("change", function () {
     // on recupere le fichier selectionné du champ
     let file = this.files[0]
     // traitement et affichage image
     showFile(file)
   })
-  
   // si le fichier est drop
-  
   div_image.addEventListener(
     "drop",
     function (event) {
@@ -232,14 +202,11 @@ input_image.addEventListener("change", function () {
     },
     false,
   );
-  
-  
   input_image.addEventListener("drag", (event)=>{
     event.preventDefault()
     let file = event.dataTransfer.files[0]
     showFile(file)
   })
-  
   // traitement de la phase drag and drop
   // si l'utilisateur glisse le fichier au dessus du fichier
   
@@ -250,56 +217,37 @@ input_image.addEventListener("change", function () {
   })
   
   // si le fichier quitte le champ de drag
-  
   div_image.addEventListener("dragleave", (event)=>{
-  
     // dropChamp.classList.remove("active");
-  
   })
-  
 //   // si l'image quitte par dessusle drage
 //   dropChamp.addEventListener("dragleave", (event)=>{
 //     headerText.textContent = "Glisser et deposer pour changer le style"
 //   })
-
-  
   function showFile(file) {
-
     const span_error_message = document.querySelector(".div-photo__error-message");
     span_error_message.setAttribute("style", "text-align:center;");
     // on recupère le type de fichier
     const fileType = file.type;
-
     const fileSize = file.size;
-
     const fileExtension = ['image/jpeg', 'image/jpg', 'image/png']
-  
     // on vérifie la validité du type de fichier
     if (fileExtension.includes(fileType) && (fileSize/1000000) <= 5) {
-
         span_error_message.innerHTML= ""
-
         div_image.setAttribute("style", "border-color: #C4C4C4; border-width: 1px");
-  
         let fileReader = new FileReader
-  
         fileReader.readAsDataURL(file);
-    
         fileReader.onload = () => {
             let fileUrl = fileReader.result
             let imageTag = document.createElement("img")
             imageTag.src = fileUrl;
-
             //stock iurl image 
             contact.picture = fileUrl
             imageTag.alt = 'Image'
-    
             imageTag.setAttribute("style", "width: 100%; height: 100%; object-fit: contain")
-    
             div_image.innerHTML = ""
             div_image.appendChild(imageTag)
         }
-  
     }
     else {
         div_image.setAttribute("style", "border-color: #FF3838; border-width: 3px");
@@ -312,16 +260,12 @@ input_image.addEventListener("change", function () {
       
     }
   }
-
-
 /**
  * show data of contact
  * @param {Array} pArrayContacts 
  */
 function showContact(pArrayContacts) {
-
     for (let index = 0; index < pArrayContacts.length; index++) {
-
         // link html and js by DOM
         const contain_content = document.querySelector(".contain-content");
         const div_contain_contain_info = document.createElement("div");
@@ -345,8 +289,7 @@ function showContact(pArrayContacts) {
         p_phone.classList.add("contain-info__div-text__phone");
         p_a_propos.classList.add("contain-info__div-text__bio");
         image_profil.classList.add("img-contact");
-
-
+        
         // complet text content in element
         icon_modify.innerHTML = `
             <svg xmlns="http://www.w3.org/2000/svg" height="1em" class="ico-modify"
@@ -370,9 +313,7 @@ function showContact(pArrayContacts) {
         let telephone_show = pArrayContacts[index].telephone;
         let biographie_show =  pArrayContacts[index].bio;
         let src_picture = pArrayContacts[index].picture;
-
         
-
         // full element of contact list
         p_a_propos.innerHTML = "<span>What is " + prenom_show +" "+ nom_show +"?<br>"+biographie_show
         p_phone.innerText = telephone_show;
@@ -402,25 +343,18 @@ function showContact(pArrayContacts) {
 }
 
 function setClassIcon(p_icond_deletes, p_icond_modifies) {
-
-    
-
     for (let index = 0; index < p_icond_deletes.length; index++) {
         p_icond_deletes[index].classList.add("d"+index);
         p_icond_modifies[index].classList.add("m"+index);
         
     }
 }
-
 // créer contact
-
 function addContacts(pContact) {
     array_contacts.unshift(pContact)
     saveData(array_contacts)
 }
-
 const btn__create = document.querySelector(".contain-button__create-btn")
-
 btn__create.addEventListener("click",()=>{
     if (contact.prenom == "" ||
     contact.nom == "" ||
@@ -438,7 +372,6 @@ btn__create.addEventListener("click",()=>{
         clear()
     }
 })
-
 // Save data
 function saveData(arrayContacts) {
     localStorage . setItem ( 'contacts'  , JSON  . stringify ( arrayContacts )); 
@@ -447,42 +380,32 @@ function getData() {
     return  JSON.parse(localStorage.getItem('contacts'));
    
 }
-
 // //   validation groupe
-
-let team_input = document.querySelector(".div-groupe__input");
-let span_error_messag = document.querySelector(".div-groupe__error-message");
 // let team_input = team_input.value
 function validateGroupe(team2) {
-    const RegExp = /[a-zA-Z0-9]{10,20}/;
+    const RegExp = /[A-Za-z0-9\w]*[a-zA-Z0-9\w]{10,20}/;
     return RegExp.test(team2);
-    
 }
 team_input.addEventListener("blur", () => {
     if (validateGroupe(team_input.value)){
-        team_input.setAttribute("style", "border-color: #C4C4C4; border-width: 1px");
-        span_error_message.innerHTML = "";
+        team_input.setAttribute("style","border-color: #C4C4C4; border-width: 1px");
+        span_error_message.innerHTML = "" ;
+        contact.groupe = team_input.value;
     } else{
         team_input.setAttribute("style", "border-color: #FF3838; border-style: solid; border-width: 3px");
-        span_error_messag .innerHTML ="veiller saisir la longueur exacte ";
-
+        span_error_messag .innerHTML ="veiller saisir la longueur exacte";
     }
 })
 
-
-let biographie= document.querySelector(".div-bio__input");
-let span=document.querySelector(".div-bio__error-message");
-function validBio() {
-    let biographie=validLenghBio(biographie.value); 
-    if(biographie ==""){
-        span.innerText="saisi un text"
-        console.log(biographie);
-    // }else{
-
-
- }
-    
-}
-
-
+bio_input.addEventListener("blur", () => {
+    let span=document.querySelector(".div-bio__error-message");
+    if (validateGroupe(bio_input.value)){
+        bio_input.setAttribute("style","border-color: #C4C4C4; border-width: 1px");
+        span_error_message.innerHTML = "" ;
+        contact.bio = bio_input.value;
+    } else{
+        bio_input.setAttribute("style", "border-color: #FF3838; border-style: solid; border-width: 3px");
+        span.innerHTML ="veiller saisir la longueur exacte";
+    }
+})
     
