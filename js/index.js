@@ -315,7 +315,7 @@ function showContact(pArrayContacts) {
         let src_picture = pArrayContacts[index].picture;
         
         // full element of contact list
-        p_a_propos.innerHTML = "<span>What is " + prenom_show +" "+ nom_show +"?<br>"+biographie_show
+        p_a_propos.innerHTML = "<span>Qui est " + prenom_show +" "+ nom_show +"?<br>"+biographie_show
         p_phone.innerText = telephone_show;
         nom_groupe.innerText = prenom_show +" "+ nom_show +" - "+groupe_show
         image_profil.src = src_picture;
