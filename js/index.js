@@ -417,3 +417,5 @@ function getData() {
     return JSON.parse(localStorage.getItem('contacts'));
 
 }
+// update contacts
+let form = querySelector(".left-main");
