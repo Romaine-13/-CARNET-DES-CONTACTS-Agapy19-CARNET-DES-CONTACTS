@@ -1,48 +1,107 @@
 //initialize array of contact persons
-
-let contacts;
+let contacts = [];
 
 if (getData() === null) {
     contacts = []
 } else {
     contacts = getData();
-    document.querySelector(".contain-content").innerHTML = ""
+    document.querySelector(".contain-content").innerHTML  = ""
     showContact(contacts)
 }
+
 //creation and initilize contact object
-let contact = new Object()
+let contact = new Object();
+
+// Save data
+function saveData(contacts) {
+    localStorage . setItem ( 'contacts'  , JSON  . stringify ( contacts )); 
+}
+function getData() {
+    return  JSON.parse(localStorage.getItem('contacts'));
+}
 
 //Link objects HTML and Js by DOM API
-const input_txt_prenom = document.querySelector(".div-prenom__input");
-const input_txt_nom = document.querySelector(".div-nom__input");
-let input_email = document.querySelector(".div-email__input");
-let span_error_message = document.querySelector(".div-email__error-message");
-let input_phone = document.querySelector(".div-phone__input");
-let phoneNumber = input_phone
-const div_image = document.querySelector(".contain-input__div-photo");
-const input_image = document.querySelector(".contain-input__div-photo input")
-let team_input = document.querySelector(".div-groupe__input");
-let span_error_messag = document.querySelector(".div-groupe__error-message");
-let btn = document.querySelector('.contain-button__create-clear');
-let inputs = document.querySelectorAll('input');
-const bio_input = document.querySelector('.div-bio__input');
+const inputs = document.querySelectorAll("input");
+const error_messages = document.querySelectorAll(".style-error-message");
+const button = document.querySelectorAll("button");
+const div_container_image = document.querySelector(".contain-input__div-photo");
+const div_image = document.querySelector(".contain-input__div-photo__photo");
+
+function isValidInput(regex_expression, input_value) {
+    const expression_regex = new RegExp(regex_expression);
+    if (expression_regex.test(input_value.value)) {
+        return true;
+    } else {
+        return false;
+    }
+    
+}
+
+
+function isUnique(contacts, input_value) {
+    const exist_values = [];
+    const type_input = input_value.type;
+
+    if (contacts.length > 0) {
+        if (type_input =="tel") {
+            contacts.forEach(element => {exist_values.push(element.telephone)});  
+        }
+        else{contacts.forEach(element => {exist_values.push(element.email)});}
+        if (exist_values.includes(input_value.value)) {
+            return false
+        } 
+        else {
+            return true
+        }
+    }
+    else{return true}
+}
 
 /**
- * function to validate content
- * if return is -1: length of name is < 3
- * if return is =1: length of name is between 3 and 50
- * if return is 0: length of name is valid (between 3 and 50)
- * 
- * @param {string} param_name 
+ * correct message configuration
+ * @param {object} input 
+ * @param {object} elementError 
  */
-function validLengthName(param_name) {
-    if (param_name.length >= 3 && param_name.length <= 50) {
-        return 0
+
+function configCorrectMessage(input, elementError) {
+    elementError.textContent = "";
+    input.setAttribute("style", "border-color: #C4C4C4; border-width: 1px");
+}
+
+/**
+ * Error message configuration
+ * @param {object} input 
+ * @param {object} elementError 
+ * @param {string} errorMessage 
+ */
+function configErrorMessage(input, elementError, errorMessage) {
+    elementError.textContent = errorMessage;
+    input.setAttribute("style", "border-color: #FF3838; border-style: solid; border-width: 3px");   
+}
+
+/**
+ * function to validate length value of input
+ * @param {*} input 
+ */
+function validMinSize(input, min_size) {
+    if (input.value.length >= min_size) {
+        return true
     }
-    else if (param_name.length < 3) {
-        return -1
-    } else {
-        return 1
+    else {
+        return false
+    }
+}
+
+/**
+ * function to validate length value of input
+ * @param {*} input 
+ */
+function validMaxSize(input, max_size) {
+    if (input.value.length <= max_size) {
+        return true
+    }
+    else {
+        return false
     }
 }
 
@@ -55,214 +114,155 @@ function validLengthName(param_name) {
  * @param {object} error_element 
  */
 
-function ManageInputName(error_message1, error_message2, error_element, input_element) {
-    let out_state = validLengthName(input_element.value);
-    if (out_state == 0) {
-        error_element.textContent = "";
-        input_element.setAttribute("style", "border-color: #C4C4C4; border-width: 1px");
-        return true;
-    }
-    else {
-        input_element.setAttribute("style", "border-color: #FF3838; border-style: solid; border-width: 3px");
 
-        if (out_state == -1) {
-            error_element.textContent = error_message1;
-        }
-        else {
-            error_element.textContent = error_message2;
-        }
-        return false
-    }
-}
 //Managment events input changed of input
 
-//input for first name
-input_txt_prenom.addEventListener("blur", () => {
-    let message1, message2, element_error;
-    message1 = "Votre prenom est trop court, Taille min acceptée: 3";
-    message2 = "Votre prenom est trop long, Taille max acceptée: 50";
-    element_error = document.querySelector(".div-prenom__error-message");
-    let valid_prenom = ManageInputName(message1, message2, element_error, input_txt_prenom);
-
-    if (valid_prenom) {
-        contact.prenom = input_txt_prenom.value;
+//valid prenom
+inputs[0].addEventListener("blur", () => {
+    const message_error = "la longueur de votre prenom doit etre entre 3 et 50 caractères";
+    const min_size = 3, max_size = 50
+    if (validMinSize(inputs[0], min_size) && validMaxSize(inputs[0], max_size)) {
+        contact.prenom = inputs[0].value;
+        configCorrectMessage(inputs[0], error_messages[0]);
+    } else {
+        configErrorMessage(inputs[0], error_messages[0],message_error);
     }
-})
+});
 
-//input for last name
-input_txt_nom.addEventListener("blur", () => {
-    let message1, message2, element_error;
-    message1 = "Votre nom est trop court, Taille min acceptée: 3";
-    message2 = "Votre nom est trop long, Taille max acceptée: 50";
-    element_error = document.querySelector(".div-nom__error-message");
-    valid_nom = ManageInputName(message1, message2, element_error, input_txt_nom);
+//valid nom
+inputs[1].addEventListener("blur", () => {
+    const message_error = "la longueur de votre nom doit etre entre 3 et 50 caractères";
+    const min_size = 3, max_size = 50
+    if (validMinSize(inputs[1], min_size) && validMaxSize(inputs[1], max_size)) {
+        contact.nom = inputs[1].value;
+        configCorrectMessage(inputs[1], error_messages[1]);
+    } else {
+        configErrorMessage(inputs[1], error_messages[1],message_error);
+    }
+});
 
-    if (valid_nom) {
-        contact.nom = input_txt_nom.value;
+// valid Phone Number
+function validatePhoneNumber(phone, errorElement) {
+
+    const min_size = 10, max_size = 10;
+        
+    if (isNaN(phone.value)) {
+        configErrorMessage(phone,errorElement, "Votre Numéro ne doit comporter que des chiffres"); 
     }
-})
-// reset form
-function clear(params) {
-    for (let index = 0; index < inputs.length; index++) {
-        inputs[index].value = "";
+    else if (!(validMinSize(phone, min_size) && validMaxSize(phone, max_size))) {
+        configErrorMessage(phone,errorElement, "Votre Numéro doit comporter 10 chiffres"); 
+    } 
+    else if(!isValidInput("^(084|085|080|089|081|082|083|099|097|090)[0-9]{7}$", phone)){
+        configErrorMessage(phone,errorElement, "Format Numéro invalide");
     }
-    contact.prenom = "";
-    contact.nom = "";
-    contact.telephone = "";
-    contact.groupe = "";
-    contact.email = "";
-    contact.bio = "";
-    contact.picture = "";
+    else if(!isUnique(contacts, phone)){
+        configErrorMessage(phone,errorElement, "Ce numéro existe dejà");
+    }
+    else{
+        configCorrectMessage(phone,errorElement); 
+        contact.telephone = phone.value
+    }    
 }
-btn.addEventListener('click', () => {
-    clear();
-})
+
+inputs[2].addEventListener("blur", () => {
+    validatePhoneNumber(inputs[2], error_messages[2]); 
+});
+
+
+// valid groupe
+inputs[3].addEventListener("blur", () => {
+    if(!isValidInput("^([A-Za-z])[A-Za-z0-9]{2,}$", inputs[3])){
+        configErrorMessage(inputs[3],error_messages[3], "Le nom d groupe doit commencer par une lettre, doit comporter seulement les lettres et chiffres, doit avoir une taille min de 2");
+    }
+    else{
+        configCorrectMessage(inputs[3],error_messages[3]);
+        contact.groupe = inputs[3].value
+    }
+});
+
 //  email function
-function validateEmail(email) {
+inputs[4].addEventListener("blur", () => {
+    if (!isValidInput("^[a-zA-Z0-9]+[\@][a-zA-Z]+\.[a-zA-Z]{2,6}$", inputs[4])){
+        configErrorMessage(inputs[4], error_messages[4],"adresse mail invalide") ;
+    } 
+    else if(!isUnique(contacts, inputs[4])) {
+        configErrorMessage(inputs[4], error_messages[4],"Cet adresse mail existe dejà")
+    } 
+    else{
+        contact.email = inputs[4]
+        configCorrectMessage(inputs[4], error_messages[4]);
+    }  
+});
 
-    let emailReg = new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))/i);
-    return emailReg.test(email);
-}
-input_email.addEventListener("blur", () => {
-    if (validateEmail(input_email.value)) {
-        input_email.setAttribute("style", "border-color: #C4C4C4; border-width: 1px");
-        span_error_message.innerHTML = "";
-        contact.email = input_email.value;
+//valid bio
+inputs[5].addEventListener("blur", () => {
+    const min_size = 20;
+    if(!validMinSize(inputs[5], min_size)){
+        configErrorMessage(inputs[5],error_messages[5], "votre biographie doit comporter 20 caractères au minimum");
     }
-    else {
-        input_email.setAttribute("style", "border-color: #FF3838; border-style: solid; border-width: 3px");
-        span_error_message.innerHTML = "Email invalide";
+    else{
+        configCorrectMessage(inputs[5],error_messages[5]);
+        contact.bio = inputs[5].value
     }
-})
-// validate Phone Number
-function validatePhoneNumber(pPhone) {
-    pPhone = pPhone.value
-    if (pPhone === "") {
-        phoneNumber.setAttribute("style", "border-color: #FF3838; border-style: solid;border-width: 3px");
-        document.querySelector(".div-phone__error-message").textContent = "Enter a valid number";
-        return false;
-    }
-    else if (isNaN(pPhone)) {
-        phoneNumber.setAttribute("style", "border-color: #FF3838; border-style: solid;border-width: 3px");
-        document.querySelector(".div-phone__error-message").textContent = "enter only numeric value";
-        return false;
-    }
-    else if (pPhone.length < 10) {
-        phoneNumber.setAttribute("style", "border-color: #FF3838; border-style: solid;border-width: 3px");
-        document.querySelector(".div-phone__error-message").textContent = "enter 10 digits phone number";
-        return false;
-    }
-    else if (pPhone.length > 10) {
-        phoneNumber.setAttribute("style", "border-color: #FF3838; border-style: solid;border-width: 3px");
-        document.querySelector(".div-phone__error-message").textContent = "enter a valid phone number";
-        return false;
-    }
-    else if (pPhone.charAt(0) != 0) {
-        phoneNumber.setAttribute("style", "border-color: #FF3838; border-style: solid;border-width: 3px");
-        document.gquerySelector(".div-phone__error-message").textContent = "your phone number must start with a 0";
-        return false;
-    }
+});
 
-    else {
-        phoneNumber.setAttribute("style", "border-color: #C4C4C4; border-width: 1px");
-        document.querySelector(".div-phone__error-message").textContent = "";
-        return true
-    }
-
-}
-
-input_phone.addEventListener("blur", () => {
-    let valid_phone = validatePhoneNumber(input_phone);
-    if (valid_phone) {
-        contact.telephone = input_phone.value
-    }
-})
-// manage drag and drop 
-
-// link between div_image and input image
-div_image.addEventListener("click", () => {
-    input_image.click();
-})
-input_image.addEventListener("change", function () {
-    // on recupere le fichier selectionné du champ
-    let file = this.files[0]
-    // traitement et affichage image
-    showFile(file)
-})
-// si le fichier est drop
-div_image.addEventListener(
-    "drop",
-    function (event) {
-        // Empêche l'action par défaut (ouvrir comme lien pour certains éléments)
-        event.preventDefault();
-        // Déplace l'élément traîné vers la cible du drop sélectionnée
-        let file = event.dataTransfer.files[0]
-        showFile(file)
-    },
-    false,
-);
-input_image.addEventListener("drag", (event) => {
-    event.preventDefault()
-    let file = event.dataTransfer.files[0]
-    showFile(file)
-})
-// traitement de la phase drag and drop
-// si l'utilisateur glisse le fichier au dessus du fichier
-
-div_image.addEventListener("dragover", (event) => {
-    event.preventDefault();
-    // headerText.textContent = "Relachez pour uploader l'image"
-    // dropChamp.classList.add("active");
-})
-
-// si le fichier quitte le champ de drag
-div_image.addEventListener("dragleave", (event) => {
-    // dropChamp.classList.remove("active");
-})
-//   // si l'image quitte par dessusle drage
-//   dropChamp.addEventListener("dragleave", (event)=>{
-//     headerText.textContent = "Glisser et deposer pour changer le style"
-//   })
-function showFile(file) {
-    const span_error_message = document.querySelector(".div-photo__error-message");
-    span_error_message.setAttribute("style", "text-align:center;");
-    // on recupère le type de fichier
+// valid image profile
+function getUrl(file) {
     const fileType = file.type;
     const fileSize = file.size;
     const fileExtension = ['image/jpeg', 'image/jpg', 'image/png']
     // on vérifie la validité du type de fichier
-    if (fileExtension.includes(fileType) && (fileSize / 1000000) <= 5) {
-        span_error_message.innerHTML = ""
-        div_image.setAttribute("style", "border-color: #C4C4C4; border-width: 1px");
-        let fileReader = new FileReader
+    if (!fileExtension.includes(fileType)) {
+        configErrorMessage(inputs[6],error_messages[6],"extension non prise en charge. choisissez un PNG JPG ou JPEG");
+    }
+
+    else if ((fileSize/1000000) > 5){
+        configErrorMessage(inputs[6],error_messages[6],"image trop volumineuse. le poids max est de 5Mo");
+    }
+    else {
+        configCorrectMessage(inputs[6], error_messages[6])
+        let fileReader = new FileReader;
         fileReader.readAsDataURL(file);
         fileReader.onload = () => {
-            let fileUrl = fileReader.result
-            let imageTag = document.createElement("img")
-            imageTag.src = fileUrl;
-            //stock iurl image 
-            contact.picture = fileUrl
+            let url_image = fileReader.result
+            contact.picture = url_image
+            let imageTag = document.createElement("img");
+            imageTag.src = url_image;
             imageTag.alt = 'Image'
             imageTag.setAttribute("style", "width: 100%; height: 100%; object-fit: contain")
             div_image.innerHTML = ""
-            div_image.appendChild(imageTag)
-        }
-    }
-    else {
-        div_image.setAttribute("style", "border-color: #FF3838; border-width: 3px");
-        if (!fileExtension.includes(fileType)) {
-            span_error_message.innerHTML = "Format image invalide: Format accepté: jpeg, jpg et png";
-        }
-        else {
-            span_error_message.innerHTML = "fichier volumineux: Taille max: 5Mo";
+            div_image.appendChild(imageTag);
         }
 
     }
 }
-/**
- * show data of contact
- * @param {Array} contacts 
- */
+
+div_container_image.addEventListener("click",()=>{inputs[6].click();})
+
+div_container_image.addEventListener("drop",(event)=>{
+    event.preventDefault()
+    getUrl(event.dataTransfer.files[0]);
+    console.log(contact.picture);
+})
+
+div_container_image.addEventListener("dragover",(event)=>{
+    event.preventDefault()
+},false);
+
+inputs[6].addEventListener("change", function () {
+    getUrl(this.files[0])
+});
+
+inputs[6].addEventListener("drop", (event)=> {
+    getUrl(this.files[0])
+});
+
+
+
+// /**
+//  * show data of contact
+//  * @param {Array} contacts 
+//  */
 function showContact(contacts) {
     for (let index = 0; index < contacts.length; index++) {
         // link html and js by DOM
@@ -310,9 +310,9 @@ function showContact(contacts) {
         let nom_show = contacts[index].nom;
         let groupe_show = contacts[index].groupe;
         let telephone_show = contacts[index].telephone;
-        let biographie_show = contacts[index].bio;
+        let biographie_show =  contacts[index].bio;
         let src_picture = contacts[index].picture;
-
+        
         // full element of contact list
         p_a_propos.innerHTML = "<span>Qui est " + prenom_show + " " + nom_show + "?<br>" + biographie_show
         p_phone.innerText = telephone_show;
@@ -347,13 +347,13 @@ function delete_Contact(contacts, index) {
     showContact(contacts);
 }
 
+
 // créer contact
-function addContacts(pContact) {
-    contacts.push(pContact)
+function addContacts(contact) {
+    contacts.unshift(contact)
     saveData(contacts)
 }
-const btn__create = document.querySelector(".contain-button__create-btn")
-btn__create.addEventListener("click", () => {
+button[0].addEventListener("click",()=>{
     if (contact.prenom == "" ||
         contact.nom == "" ||
         contact.telephone == "" ||
@@ -365,44 +365,26 @@ btn__create.addEventListener("click", () => {
         alert("veuillez renseigner tous les champs obligatoires");
     } else {
         addContacts(contact);
-        document.querySelector(".contain-content").innerHTML = ""
+        document.querySelector(".contain-content").innerHTML  = ""
         showContact(contacts);
         clear()
     }
 })
-// Save data
-function saveData(arrayContacts) {
-    localStorage.setItem('contacts', JSON.stringify(arrayContacts));
-}
-function getData() {
-    return JSON.parse(localStorage.getItem('contacts'));
 
-}
-// //   validation groupe
-// let team_input = team_input.value
-function validateGroupe(team2) {
-    const RegExp = /[A-Za-z0-9\w]*[a-zA-Z0-9\w]{5,}/;
-    return RegExp.test(team2);
-}
-team_input.addEventListener("blur", () => {
-    if (validateGroupe(team_input.value)) {
-        team_input.setAttribute("style", "border-color: #C4C4C4; border-width: 1px");
-        span_error_message.innerHTML = "";
-        contact.groupe = team_input.value;
-    } else {
-        team_input.setAttribute("style", "border-color: #FF3838; border-style: solid; border-width: 3px");
-        span_error_messag.innerHTML = "veiller saisir la longueur exacte";
+// reset form
+function clear() {
+    for (let index = 0; index < inputs.length; index++) {
+        inputs[index].value = "";
+        configCorrectMessage(inputs[index],error_messages[index]);
     }
-})
-
-bio_input.addEventListener("blur", () => {
-    let span = document.querySelector(".div-bio__error-message");
-    if (validateGroupe(bio_input.value)) {
-        bio_input.setAttribute("style", "border-color: #C4C4C4; border-width: 1px");
-        span_error_message.innerHTML = "";
-        contact.bio = bio_input.value;
-    } else {
-        bio_input.setAttribute("style", "border-color: #FF3838; border-style: solid; border-width: 3px");
-        span.innerHTML = "veiller saisir la longueur exacte";
-    }
-})
+    contact.prenom = "";
+    contact.nom = "";
+    contact.telephone = "";
+    contact.groupe = "";
+    contact.email = "";
+    contact.bio = "";
+    contact.picture = "";
+}
+button[1].addEventListener('click', () => {
+    clear();
+});
