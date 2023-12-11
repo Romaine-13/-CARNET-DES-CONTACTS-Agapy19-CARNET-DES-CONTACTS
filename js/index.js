@@ -360,8 +360,8 @@ function showContact(pArrayContacts) {
         contain_content.appendChild(div_contain_contain_info);
 
         icon_delete_all = document.querySelectorAll(".ico-delete");
-        icon_modify_all = document.querySelectorAll(".ico-modify");
-        setClassIcon(icon_delete_all, icon_modify_all);
+        icon_modify = document.querySelectorAll(".ico-modify");
+        setClassIcon(icon_delete_all, icon_modify);
 
     }
 
@@ -377,9 +377,15 @@ function setClassIcon(p_icond_deletes, p_icond_modifies) {
 
     }
 }
-
+icon_delete.addEventListener("click", () => {
+        update_contact(contacts, index);
+    
+} )
+// update contacts
+function update_contact(contacts, index) {
+    console.log(contacts[index]);
+ }
 // créer contact
-
 function addContacts(pContact) {
     array_contacts.unshift(pContact)
     saveData(array_contacts)
@@ -417,5 +423,3 @@ function getData() {
     return JSON.parse(localStorage.getItem('contacts'));
 
 }
-// update contacts
-let form = querySelector(".left-main");
